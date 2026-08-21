@@ -58,4 +58,17 @@ src/
 
 ## Despliegue
 
-Publicar el contenido de `dist/` en cualquier hosting estático con HTTPS.
+### GitHub Pages (automático)
+
+Cada push a `main` despliega en:
+
+**https://neaf1988.github.io/adripark/**
+
+1. En el repo: **Settings → Pages → Build and deployment → Source** → elige **GitHub Actions**.
+2. Haz push a `main` (o ejecuta el workflow manualmente en **Actions**).
+
+El workflow está en `.github/workflows/deploy.yml`.
+
+### Otros hostings
+
+Publicar el contenido de `dist/` en cualquier hosting estático con HTTPS. Para GitHub Pages usar `VITE_BASE_PATH=/adripark/` al hacer build.
