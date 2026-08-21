@@ -1,0 +1,11 @@
+---
+description: Reglas de interfaz de usuario táctil y compresión de fotos
+globs: "src/**/*"
+alwaysApply: false
+---
+
+# Reglas de UI/UX y Optimizaciones
+
+1. **UX Táctil:** Los botones interactivos deben tener altura mínima de `48px` (`min-h-12`, preferible `min-h-14` si el texto puede ocupar dos líneas), padding vertical suficiente (`py-2.5`) y `leading-snug text-center` para que etiquetas como "Confirmar cobro" no queden recortadas en grillas de 2 columnas en móvil.
+2. **Imágenes:** Comprimir o redimensionar cualquier imagen capturada desde la cámara antes de guardarla en IndexedDB (ancho máximo 800px).
+3. **Safe area móvil:** Las acciones principales van en un pie fijo (`BottomActions`) anclado al borde inferior con `pb-[max(0.75rem,env(safe-area-inset-bottom))]`. El contenido scrollable va en un `main` con `overflow-y-auto` dentro de un contenedor `h-dvh flex flex-col overflow-hidden`.

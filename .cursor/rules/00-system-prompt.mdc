@@ -1,0 +1,21 @@
+---
+description: Visión general del proyecto de Parqueadero y stack tecnológico
+globs: "*"
+alwaysApply: true
+---
+
+# Visión General: PWA Control de Parqueadero
+
+## Objetivo
+Aplicación PWA offline-first para gestionar la entrada, salida y cobro por minuto de vehículos (Carro, Moto, Moto Grande) en un parqueadero.
+
+## Stack Tecnológico
+- Framework: React (o Vue) + Vite
+- Estilos: Tailwind CSS (Mobile-First, botones táctiles grandes)
+- Base de datos local: Dexie.js (IndexedDB)
+- PWA: `@vite-pwa/plugin`
+
+## Instrucciones de Trabajo para Cursor
+1. Cada componente o función creada debe cumplir con soporte offline.
+2. La interfaz debe ser pensada para una pantalla táctil de celular/tablet.
+3. Respeta siempre el modelo de datos definido en `01-data-model.mdc`.

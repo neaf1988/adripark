@@ -1,0 +1,28 @@
+---
+description: Flujos de usuario y reglas de negocio (Ingreso, Salida y Tarifas)
+globs: "src/components/**/*"
+alwaysApply: false
+---
+
+# Requerimientos de Funcionalidades
+
+## Tipos de vehículo
+- Los tipos válidos son: **Carro**, **Moto** y **Moto Grande** (en ese orden en la UI).
+
+## 1. Módulo de Ingreso
+- Al elegir **Moto** o **Moto Grande**, mostrar obligatoriamente los campos de cascos (0, 1, 2), intercomunicador (0, 1, 2), guantes (0, 1, 2) y otros accesorios (texto libre).
+- Permitir tomar foto/adjuntar desde la cámara del teléfono y guardarla en Base64/Blob.
+- Permitir ajustar la hora de ingreso (por defecto la hora actual; no puede ser futura).
+- Los ingresos en estado `PARKED` pueden editarse desde la lista de estacionados (placa, hora, tipo, accesorios, fotos y notas).
+
+## 2. Módulo de Salida y Cobro
+- Buscador por placa en tiempo real sobre los vehículos en estado `PARKED`.
+- Al seleccionar una **Moto** o **Moto Grande**, mostrar en pantalla de cobro: cascos, intercomunicador, guantes y **otros accesorios** registrados en el ingreso.
+- Fórmula de cobro sugerida:
+  - `minutos = Math.max(1, Math.ceil((checkOutTime - checkInTime) / 60000))`
+  - `totalSugerido = minutos * tarifaPorMinuto`
+- El campo **Total a cobrar** se precarga con el monto sugerido pero **es editable** antes de confirmar, para aplicar descuentos o propinas sin campos adicionales.
+- Al confirmar, se guarda el monto final editado en `totalAmount`.
+
+## 3. Tarifas
+- Una tarifa por tipo: Carro, Moto y Moto Grande.

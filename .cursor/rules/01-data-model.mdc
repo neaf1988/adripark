@@ -1,0 +1,36 @@
+---
+description: Esquema de base de datos Dexie.js para tickets y tarifas
+globs: "src/**/*.{ts,js,tsx,jsx}"
+alwaysApply: false
+---
+
+# Modelo de Datos (Dexie.js)
+
+## Tablas e Interfaces
+
+```typescript
+export interface Rate {
+  id: string;
+  vehicleType: string; // 'carro' | 'moto' | 'moto-grande'
+  costPerMinute: number;
+}
+
+export interface Ticket {
+  id?: number; // Auto-incremental
+  plate: string; // Placa (indexado para búsquedas)
+  vehicleType: 'Carro' | 'Moto' | 'Moto Grande';
+  checkInTime: string; // ISO String
+  checkOutTime: string | null;
+  notes?: string;
+  photos?: string[]; // Base64
+  // Especificos de Motos (Moto y Moto Grande)
+  helmetsCount?: number; // 0, 1, 2
+  intercomCount?: number; // 0, 1, 2
+  glovesCount?: number; // 0, 1, 2
+  otherAccessories?: string;
+  // Estado y Cobro
+  status: 'PARKED' | 'COMPLETED' | 'CANCELLED';
+  totalMinutes?: number;
+  totalAmount?: number; // Monto final cobrado (puede diferir del calculado por descuento/propina)
+}
+```
