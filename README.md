@@ -60,14 +60,19 @@ src/
 
 ### GitHub Pages (automático)
 
-Cada push a `main` despliega en:
+URL final: **https://neaf1988.github.io/adripark/**
 
-**https://neaf1988.github.io/adripark/**
+#### Activar Pages (solo una vez)
 
-1. En el repo: **Settings → Pages → Build and deployment → Source** → elige **GitHub Actions**.
-2. Haz push a `main` (o ejecuta el workflow manualmente en **Actions**).
+1. Abre **Settings → Pages**: https://github.com/neaf1988/adripark/settings/pages
+2. En **Build and deployment → Source**, elige **Deploy from a branch**.
+3. En **Branch**, selecciona **`gh-pages`** y carpeta **`/ (root)`**, luego **Save**.
 
-El workflow está en `.github/workflows/deploy.yml`.
+> La rama `gh-pages` la crea el workflow en el primer despliegue exitoso. Si no aparece aún, espera a que termine el workflow en **Actions** y vuelve a refrescar la página de Settings.
+
+4. Ve a **Actions** y ejecuta **Deploy to GitHub Pages** (o haz push a `main`).
+
+El workflow publica el contenido de `dist/` en la rama `gh-pages`.
 
 ### Otros hostings
 
