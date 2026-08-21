@@ -16,12 +16,18 @@ npm install
 npm run dev
 ```
 
+Build de producción:
+
+```bash
+npm run build
+```
+
 ## Modelo de datos
 
 ### Tabla `rates`
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
-| id | string | Identificador (`moto`, `carro`, `camioneta`) |
+| id | string | Identificador (`carro`, `moto`, `moto-grande`) |
 | vehicleType | string | Tipo de vehículo |
 | costPerMinute | number | Tarifa por minuto |
 
@@ -30,7 +36,7 @@ npm run dev
 |-------|------|-------------|
 | id | number | Auto-incremental |
 | plate | string | Placa (indexada) |
-| vehicleType | enum | Moto, Carro, Camioneta |
+| vehicleType | enum | Carro, Moto, Moto Grande |
 | checkInTime | string | ISO String |
 | checkOutTime | string \| null | ISO String |
 | status | enum | PARKED, COMPLETED, CANCELLED |
@@ -49,3 +55,7 @@ src/
 │   └── index.ts       # Interfaces Rate y Ticket
 └── App.tsx
 ```
+
+## Despliegue
+
+Publicar el contenido de `dist/` en cualquier hosting estático con HTTPS.
