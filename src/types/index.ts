@@ -22,6 +22,8 @@ export interface Ticket {
   intercomCount?: number;
   glovesCount?: number;
   otherAccessories?: string;
+  stayUnlocked?: boolean;
+  keysLeft?: boolean;
   status: TicketStatus;
   totalMinutes?: number;
   totalAmount?: number;

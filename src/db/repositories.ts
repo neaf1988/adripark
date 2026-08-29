@@ -63,6 +63,8 @@ export type ParkedTicketUpdate = {
   intercomCount?: number;
   glovesCount?: number;
   otherAccessories?: string;
+  stayUnlocked?: boolean;
+  keysLeft?: boolean;
 };
 
 export async function updateParkedTicket(id: number, updates: ParkedTicketUpdate): Promise<void> {
@@ -90,11 +92,22 @@ export async function updateParkedTicket(id: number, updates: ParkedTicketUpdate
     updated.intercomCount = updates.intercomCount;
     updated.glovesCount = updates.glovesCount;
     updated.otherAccessories = updates.otherAccessories;
+    updated.stayUnlocked = updates.stayUnlocked ?? true;
+    delete updated.keysLeft;
+  } else if (updates.vehicleType === 'Carro') {
+    updated.keysLeft = updates.keysLeft ?? false;
+    delete updated.helmetsCount;
+    delete updated.intercomCount;
+    delete updated.glovesCount;
+    delete updated.otherAccessories;
+    delete updated.stayUnlocked;
   } else {
     delete updated.helmetsCount;
     delete updated.intercomCount;
     delete updated.glovesCount;
     delete updated.otherAccessories;
+    delete updated.stayUnlocked;
+    delete updated.keysLeft;
   }
 
   await db.tickets.put(updated);
@@ -128,6 +141,14 @@ export async function completeTicket(
     totalMinutes,
     totalAmount,
   });
+}
+
+export async function deleteParkedTicket(id: number): Promise<void> {
+  const ticket = await db.tickets.get(id);
+  if (!ticket || ticket.status !== 'PARKED') {
+    throw new Error('El ingreso no se puede eliminar');
+  }
+  await db.tickets.delete(id);
 }
 
 export async function cancelTicket(id: number): Promise<void> {

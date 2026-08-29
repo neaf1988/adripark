@@ -4,6 +4,7 @@ import type { VehicleType } from '@/types';
 import { VEHICLE_TYPES, isMotoVehicle } from '@/types';
 import { normalizePlate, fromDatetimeLocalValue, nowDatetimeLocalValue } from '@/utils/format';
 import { Layout } from './Layout';
+import { VehicleExtraFields } from './VehicleExtraFields';
 import { Button } from './ui/Button';
 import { OptionGroup } from './ui/OptionGroup';
 import { PhotoCapture } from './ui/PhotoCapture';
@@ -13,6 +14,8 @@ interface CheckInFormProps {
   onSuccess: () => void;
 }
 
+import { buildVehicleFields } from '@/utils/vehicleFields';
+
 export function CheckInForm({ onBack, onSuccess }: CheckInFormProps) {
   const [plate, setPlate] = useState('');
   const [vehicleType, setVehicleType] = useState<VehicleType>('Carro');
@@ -20,6 +23,8 @@ export function CheckInForm({ onBack, onSuccess }: CheckInFormProps) {
   const [intercomCount, setIntercomCount] = useState<0 | 1 | 2>(0);
   const [glovesCount, setGlovesCount] = useState<0 | 1 | 2>(0);
   const [otherAccessories, setOtherAccessories] = useState('');
+  const [stayUnlocked, setStayUnlocked] = useState(true);
+  const [keysLeft, setKeysLeft] = useState(false);
   const [notes, setNotes] = useState('');
   const [photos, setPhotos] = useState<string[]>([]);
   const [checkInLocal, setCheckInLocal] = useState(nowDatetimeLocalValue());
@@ -60,6 +65,7 @@ export function CheckInForm({ onBack, onSuccess }: CheckInFormProps) {
         checkInTime,
         notes: notes.trim() || undefined,
         photos: photos.length > 0 ? photos : undefined,
+        ...buildVehicleFields(vehicleType, stayUnlocked, keysLeft),
         ...(isMotoVehicle(vehicleType)
           ? {
               helmetsCount,
@@ -124,6 +130,14 @@ export function CheckInForm({ onBack, onSuccess }: CheckInFormProps) {
           value={vehicleType}
           options={VEHICLE_TYPES.map((type) => ({ label: type, value: type }))}
           onChange={setVehicleType}
+        />
+
+        <VehicleExtraFields
+          vehicleType={vehicleType}
+          stayUnlocked={stayUnlocked}
+          keysLeft={keysLeft}
+          onStayUnlockedChange={setStayUnlocked}
+          onKeysLeftChange={setKeysLeft}
         />
 
         {isMotoVehicle(vehicleType) && (

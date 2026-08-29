@@ -28,6 +28,9 @@ export interface Ticket {
   intercomCount?: number; // 0, 1, 2
   glovesCount?: number; // 0, 1, 2
   otherAccessories?: string;
+  stayUnlocked?: boolean; // ¿Queda desbloqueada? (default true)
+  // Especificos de Carro
+  keysLeft?: boolean; // ¿Dejaron llaves? (default false)
   // Estado y Cobro
   status: 'PARKED' | 'COMPLETED' | 'CANCELLED';
   totalMinutes?: number;

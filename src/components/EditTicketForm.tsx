@@ -7,7 +7,9 @@ import {
   normalizePlate,
   toDatetimeLocalValue,
 } from '@/utils/format';
+import { buildVehicleFields } from '@/utils/vehicleFields';
 import { Layout } from './Layout';
+import { VehicleExtraFields } from './VehicleExtraFields';
 import { Button } from './ui/Button';
 import { OptionGroup } from './ui/OptionGroup';
 import { PhotoCapture } from './ui/PhotoCapture';
@@ -26,6 +28,8 @@ export function EditTicketForm({ ticket, onBack, onSuccess }: EditTicketFormProp
   const [intercomCount, setIntercomCount] = useState<0 | 1 | 2>((ticket.intercomCount ?? 0) as 0 | 1 | 2);
   const [glovesCount, setGlovesCount] = useState<0 | 1 | 2>((ticket.glovesCount ?? 0) as 0 | 1 | 2);
   const [otherAccessories, setOtherAccessories] = useState(ticket.otherAccessories ?? '');
+  const [stayUnlocked, setStayUnlocked] = useState(ticket.stayUnlocked ?? true);
+  const [keysLeft, setKeysLeft] = useState(ticket.keysLeft ?? false);
   const [notes, setNotes] = useState(ticket.notes ?? '');
   const [photos, setPhotos] = useState<string[]>(ticket.photos ?? []);
   const [error, setError] = useState<string | null>(null);
@@ -60,6 +64,7 @@ export function EditTicketForm({ ticket, onBack, onSuccess }: EditTicketFormProp
         checkInTime,
         notes: notes.trim() || undefined,
         photos: photos.length > 0 ? photos : undefined,
+        ...buildVehicleFields(vehicleType, stayUnlocked, keysLeft),
         ...(isMotoVehicle(vehicleType)
           ? {
               helmetsCount,
@@ -121,6 +126,14 @@ export function EditTicketForm({ ticket, onBack, onSuccess }: EditTicketFormProp
           value={vehicleType}
           options={VEHICLE_TYPES.map((type) => ({ label: type, value: type }))}
           onChange={setVehicleType}
+        />
+
+        <VehicleExtraFields
+          vehicleType={vehicleType}
+          stayUnlocked={stayUnlocked}
+          keysLeft={keysLeft}
+          onStayUnlockedChange={setStayUnlocked}
+          onKeysLeftChange={setKeysLeft}
         />
 
         {isMotoVehicle(vehicleType) && (
