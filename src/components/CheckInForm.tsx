@@ -23,8 +23,7 @@ export function CheckInForm({ onBack, onSuccess }: CheckInFormProps) {
   const [intercomCount, setIntercomCount] = useState<0 | 1 | 2>(0);
   const [glovesCount, setGlovesCount] = useState<0 | 1 | 2>(0);
   const [otherAccessories, setOtherAccessories] = useState('');
-  const [stayUnlocked, setStayUnlocked] = useState(false);
-  const [wasLocked, setWasLocked] = useState(false);
+  const [stayUnlocked, setStayUnlocked] = useState(true);
   const [keysLeft, setKeysLeft] = useState(false);
   const [notes, setNotes] = useState('');
   const [photos, setPhotos] = useState<string[]>([]);
@@ -35,10 +34,6 @@ export function CheckInForm({ onBack, onSuccess }: CheckInFormProps) {
   useEffect(() => {
     setError(null);
   }, [plate, vehicleType, checkInLocal]);
-
-  useEffect(() => {
-    if (!stayUnlocked) setWasLocked(false);
-  }, [stayUnlocked]);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -70,7 +65,7 @@ export function CheckInForm({ onBack, onSuccess }: CheckInFormProps) {
         checkInTime,
         notes: notes.trim() || undefined,
         photos: photos.length > 0 ? photos : undefined,
-        ...buildVehicleFields(vehicleType, stayUnlocked, wasLocked, keysLeft),
+        ...buildVehicleFields(vehicleType, stayUnlocked, keysLeft),
         ...(isMotoVehicle(vehicleType)
           ? {
               helmetsCount,
@@ -140,10 +135,8 @@ export function CheckInForm({ onBack, onSuccess }: CheckInFormProps) {
         <VehicleExtraFields
           vehicleType={vehicleType}
           stayUnlocked={stayUnlocked}
-          wasLocked={wasLocked}
           keysLeft={keysLeft}
           onStayUnlockedChange={setStayUnlocked}
-          onWasLockedChange={setWasLocked}
           onKeysLeftChange={setKeysLeft}
         />
 

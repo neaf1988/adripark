@@ -3,13 +3,7 @@ import { isMotoVehicle } from '@/types';
 
 export function isMotoLocked(ticket: Ticket): boolean {
   if (!isMotoVehicle(ticket.vehicleType)) return false;
-  if (!ticket.stayUnlocked) return true;
-  return ticket.wasLocked === true;
-}
-
-export function isMotoStillUnlocked(ticket: Ticket): boolean {
-  if (!isMotoVehicle(ticket.vehicleType)) return false;
-  return ticket.stayUnlocked === true && ticket.wasLocked !== true;
+  return ticket.stayUnlocked === false;
 }
 
 export function hasKeysLeft(ticket: Ticket): boolean {
@@ -25,13 +19,7 @@ export type CheckoutAlert = {
 export function getCheckoutAlerts(ticket: Ticket): CheckoutAlert[] {
   const alerts: CheckoutAlert[] = [];
 
-  if (isMotoStillUnlocked(ticket)) {
-    alerts.push({
-      id: 'moto-unlocked',
-      label: 'Moto desbloqueada — verificar candado',
-      variant: 'danger',
-    });
-  } else if (isMotoLocked(ticket)) {
+  if (isMotoLocked(ticket)) {
     alerts.push({
       id: 'moto-locked',
       label: 'Moto bloqueada',

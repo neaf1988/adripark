@@ -64,7 +64,6 @@ export type ParkedTicketUpdate = {
   glovesCount?: number;
   otherAccessories?: string;
   stayUnlocked?: boolean;
-  wasLocked?: boolean;
   keysLeft?: boolean;
 };
 
@@ -93,8 +92,7 @@ export async function updateParkedTicket(id: number, updates: ParkedTicketUpdate
     updated.intercomCount = updates.intercomCount;
     updated.glovesCount = updates.glovesCount;
     updated.otherAccessories = updates.otherAccessories;
-    updated.stayUnlocked = updates.stayUnlocked ?? false;
-    updated.wasLocked = updates.stayUnlocked ? (updates.wasLocked ?? false) : undefined;
+    updated.stayUnlocked = updates.stayUnlocked ?? true;
     delete updated.keysLeft;
   } else if (updates.vehicleType === 'Carro') {
     updated.keysLeft = updates.keysLeft ?? false;
@@ -103,14 +101,12 @@ export async function updateParkedTicket(id: number, updates: ParkedTicketUpdate
     delete updated.glovesCount;
     delete updated.otherAccessories;
     delete updated.stayUnlocked;
-    delete updated.wasLocked;
   } else {
     delete updated.helmetsCount;
     delete updated.intercomCount;
     delete updated.glovesCount;
     delete updated.otherAccessories;
     delete updated.stayUnlocked;
-    delete updated.wasLocked;
     delete updated.keysLeft;
   }
 

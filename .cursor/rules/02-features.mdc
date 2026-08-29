@@ -11,7 +11,7 @@ alwaysApply: false
 
 ## 1. Módulo de Ingreso
 - Al elegir **Moto** o **Moto Grande**, mostrar obligatoriamente los campos de cascos (0, 1, 2), intercomunicador (0, 1, 2), guantes (0, 1, 2) y otros accesorios (texto libre).
-- Para **Moto** y **Moto Grande**: preguntar **¿Queda desbloqueada?** (Sí/No, default No). Si queda desbloqueada, mostrar **¿Quedó bloqueada?** (Sí/No, default No).
+- Para **Moto** y **Moto Grande**: preguntar **¿Queda desbloqueada?** (Sí/No, default **Sí**). Si cambia a bloqueada, editar desde estacionados.
 - Para **Carro**: preguntar **¿Dejaron llaves?** (Sí/No, default No).
 - Permitir tomar foto/adjuntar desde la cámara del teléfono y guardarla en Base64/Blob.
 - Permitir ajustar la hora de ingreso (por defecto la hora actual; no puede ser futura).
@@ -25,8 +25,7 @@ alwaysApply: false
 - Buscador por placa en tiempo real sobre los vehículos en estado `PARKED`.
 - Al seleccionar una **Moto** o **Moto Grande**, mostrar en pantalla de cobro: cascos, intercomunicador, guantes y **otros accesorios** registrados en el ingreso.
 - **Resaltar en pantalla de cobro:**
-  - Moto **bloqueada** (no desbloqueada, o desbloqueada y luego bloqueada).
-  - Moto **desbloqueada** pendiente de bloqueo (alerta visible).
+  - Moto **bloqueada** (`stayUnlocked = false`).
   - Carro con **llaves dejadas**.
 - Fórmula de cobro sugerida:
   - `minutos = Math.max(1, Math.ceil((checkOutTime - checkInTime) / 60000))`

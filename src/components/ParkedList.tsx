@@ -136,18 +136,10 @@ export function ParkedList({ onBack }: ParkedListProps) {
                 <dd>{formatDateTime(selected.checkInTime)}</dd>
               </div>
               {isMotoVehicle(selected.vehicleType) && (
-                <>
-                  <div className="flex justify-between">
-                    <dt className="text-gray-500">Desbloqueada</dt>
-                    <dd>{selected.stayUnlocked ? 'Sí' : 'No'}</dd>
-                  </div>
-                  {selected.stayUnlocked && (
-                    <div className="flex justify-between">
-                      <dt className="text-gray-500">Quedó bloqueada</dt>
-                      <dd>{selected.wasLocked ? 'Sí' : 'No'}</dd>
-                    </div>
-                  )}
-                </>
+                <div className="flex justify-between">
+                  <dt className="text-gray-500">Desbloqueada</dt>
+                  <dd>{selected.stayUnlocked !== false ? 'Sí' : 'No'}</dd>
+                </div>
               )}
               {selected.vehicleType === 'Carro' && (
                 <div className="flex justify-between">

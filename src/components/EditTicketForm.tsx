@@ -28,8 +28,7 @@ export function EditTicketForm({ ticket, onBack, onSuccess }: EditTicketFormProp
   const [intercomCount, setIntercomCount] = useState<0 | 1 | 2>((ticket.intercomCount ?? 0) as 0 | 1 | 2);
   const [glovesCount, setGlovesCount] = useState<0 | 1 | 2>((ticket.glovesCount ?? 0) as 0 | 1 | 2);
   const [otherAccessories, setOtherAccessories] = useState(ticket.otherAccessories ?? '');
-  const [stayUnlocked, setStayUnlocked] = useState(ticket.stayUnlocked ?? false);
-  const [wasLocked, setWasLocked] = useState(ticket.wasLocked ?? false);
+  const [stayUnlocked, setStayUnlocked] = useState(ticket.stayUnlocked ?? true);
   const [keysLeft, setKeysLeft] = useState(ticket.keysLeft ?? false);
   const [notes, setNotes] = useState(ticket.notes ?? '');
   const [photos, setPhotos] = useState<string[]>(ticket.photos ?? []);
@@ -39,10 +38,6 @@ export function EditTicketForm({ ticket, onBack, onSuccess }: EditTicketFormProp
   useEffect(() => {
     setError(null);
   }, [plate, vehicleType, checkInLocal]);
-
-  useEffect(() => {
-    if (!stayUnlocked) setWasLocked(false);
-  }, [stayUnlocked]);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -69,7 +64,7 @@ export function EditTicketForm({ ticket, onBack, onSuccess }: EditTicketFormProp
         checkInTime,
         notes: notes.trim() || undefined,
         photos: photos.length > 0 ? photos : undefined,
-        ...buildVehicleFields(vehicleType, stayUnlocked, wasLocked, keysLeft),
+        ...buildVehicleFields(vehicleType, stayUnlocked, keysLeft),
         ...(isMotoVehicle(vehicleType)
           ? {
               helmetsCount,
@@ -136,10 +131,8 @@ export function EditTicketForm({ ticket, onBack, onSuccess }: EditTicketFormProp
         <VehicleExtraFields
           vehicleType={vehicleType}
           stayUnlocked={stayUnlocked}
-          wasLocked={wasLocked}
           keysLeft={keysLeft}
           onStayUnlockedChange={setStayUnlocked}
-          onWasLockedChange={setWasLocked}
           onKeysLeftChange={setKeysLeft}
         />
 

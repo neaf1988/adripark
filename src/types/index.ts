@@ -23,7 +23,6 @@ export interface Ticket {
   glovesCount?: number;
   otherAccessories?: string;
   stayUnlocked?: boolean;
-  wasLocked?: boolean;
   keysLeft?: boolean;
   status: TicketStatus;
   totalMinutes?: number;

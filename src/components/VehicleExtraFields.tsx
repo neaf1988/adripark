@@ -5,10 +5,8 @@ import { OptionGroup } from './ui/OptionGroup';
 interface VehicleExtraFieldsProps {
   vehicleType: VehicleType;
   stayUnlocked: boolean;
-  wasLocked: boolean;
   keysLeft: boolean;
   onStayUnlockedChange: (value: boolean) => void;
-  onWasLockedChange: (value: boolean) => void;
   onKeysLeftChange: (value: boolean) => void;
 }
 
@@ -20,10 +18,8 @@ const yesNoOptions = [
 export function VehicleExtraFields({
   vehicleType,
   stayUnlocked,
-  wasLocked,
   keysLeft,
   onStayUnlockedChange,
-  onWasLockedChange,
   onKeysLeftChange,
 }: VehicleExtraFieldsProps) {
   if (isMotoVehicle(vehicleType)) {
@@ -37,15 +33,6 @@ export function VehicleExtraFields({
           options={yesNoOptions}
           onChange={onStayUnlockedChange}
         />
-
-        {stayUnlocked && (
-          <OptionGroup
-            label="¿Quedó bloqueada? *"
-            value={wasLocked}
-            options={yesNoOptions}
-            onChange={onWasLockedChange}
-          />
-        )}
       </section>
     );
   }
