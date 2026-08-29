@@ -11,18 +11,28 @@ alwaysApply: false
 
 ## 1. Módulo de Ingreso
 - Al elegir **Moto** o **Moto Grande**, mostrar obligatoriamente los campos de cascos (0, 1, 2), intercomunicador (0, 1, 2), guantes (0, 1, 2) y otros accesorios (texto libre).
+- Para **Moto** y **Moto Grande**: preguntar **¿Queda desbloqueada?** (Sí/No, default No). Si queda desbloqueada, mostrar **¿Quedó bloqueada?** (Sí/No, default No).
+- Para **Carro**: preguntar **¿Dejaron llaves?** (Sí/No, default No).
 - Permitir tomar foto/adjuntar desde la cámara del teléfono y guardarla en Base64/Blob.
 - Permitir ajustar la hora de ingreso (por defecto la hora actual; no puede ser futura).
 - Los ingresos en estado `PARKED` pueden editarse desde la lista de estacionados (placa, hora, tipo, accesorios, fotos y notas).
 
-## 2. Módulo de Salida y Cobro
+## 2. Módulo de Estacionados
+- Al **cancelar un ingreso**, mostrar diálogo de confirmación advirtiendo que el registro será **eliminado definitivamente**.
+- La cancelación elimina el ticket de la base de datos (no queda en historial).
+
+## 3. Módulo de Salida y Cobro
 - Buscador por placa en tiempo real sobre los vehículos en estado `PARKED`.
 - Al seleccionar una **Moto** o **Moto Grande**, mostrar en pantalla de cobro: cascos, intercomunicador, guantes y **otros accesorios** registrados en el ingreso.
+- **Resaltar en pantalla de cobro:**
+  - Moto **bloqueada** (no desbloqueada, o desbloqueada y luego bloqueada).
+  - Moto **desbloqueada** pendiente de bloqueo (alerta visible).
+  - Carro con **llaves dejadas**.
 - Fórmula de cobro sugerida:
   - `minutos = Math.max(1, Math.ceil((checkOutTime - checkInTime) / 60000))`
   - `totalSugerido = minutos * tarifaPorMinuto`
 - El campo **Total a cobrar** se precarga con el monto sugerido pero **es editable** antes de confirmar, para aplicar descuentos o propinas sin campos adicionales.
 - Al confirmar, se guarda el monto final editado en `totalAmount`.
 
-## 3. Tarifas
+## 4. Tarifas
 - Una tarifa por tipo: Carro, Moto y Moto Grande.

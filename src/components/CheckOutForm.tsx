@@ -8,7 +8,9 @@ import {
 import type { Ticket } from '@/types';
 import { isMotoVehicle } from '@/types';
 import { formatCurrency, formatDateTime } from '@/utils/format';
+import { getCheckoutAlerts } from '@/utils/vehicleAlerts';
 import { Layout } from './Layout';
+import { VehicleCheckoutAlerts } from './VehicleCheckoutAlerts';
 import { Button } from './ui/Button';
 
 interface CheckOutFormProps {
@@ -172,6 +174,8 @@ export function CheckOutForm({ onBack, onSuccess }: CheckOutFormProps) {
                 {selected.vehicleType}
               </span>
             </div>
+
+            <VehicleCheckoutAlerts alerts={getCheckoutAlerts(selected)} />
 
             <dl className="space-y-2 text-base">
               <div className="flex justify-between">
