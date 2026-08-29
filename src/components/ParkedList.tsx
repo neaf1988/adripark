@@ -86,7 +86,7 @@ export function ParkedList({ onBack }: ParkedListProps) {
                   Volver
                 </Button>
                 <Button variant="danger" onClick={() => setShowCancelConfirm(true)}>
-                  Cancelar ingreso
+                  Eliminar ingreso
                 </Button>
               </div>
             </div>

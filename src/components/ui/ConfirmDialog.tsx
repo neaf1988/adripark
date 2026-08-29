@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react';
+import { type ReactNode, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Button } from './Button';
 
 interface ConfirmDialogProps {
@@ -24,15 +25,29 @@ export function ConfirmDialog({
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+
   if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 p-4"
+      onClick={loading ? undefined : onCancel}
+      role="presentation"
+    >
       <div
         role="alertdialog"
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
-        className="w-full max-w-md rounded-2xl bg-white p-5 shadow-xl"
+        className="w-full max-w-md rounded-2xl bg-white p-5 shadow-2xl"
+        onClick={(event) => event.stopPropagation()}
       >
         <h2 id="confirm-dialog-title" className="text-xl font-bold text-gray-900">
           {title}
@@ -47,6 +62,7 @@ export function ConfirmDialog({
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
